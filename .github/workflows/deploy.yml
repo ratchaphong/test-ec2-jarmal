@@ -44,6 +44,9 @@ jobs:
       - name: Stop and remove old container (if exists)
         run: docker rm -f ec2-jarmal-container || true
 
+      - name: Create .env file on the server
+        run: echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" >> .env
+
       # 👉 รัน container ใหม่จาก image ล่าสุด
       - name: Run new container
         run: docker run -d -p 4000:4000 --name ec2-jarmal-container ratchaphongc1/ec2-jarmal-image:latest
