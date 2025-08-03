@@ -33,7 +33,7 @@ COPY --from=builder /app/prisma ./prisma
 ENV NODE_ENV=production
 
 # Start the app
-CMD ["node", "dist/main"]
+CMD ["node", "dist/src/main.js"]
 
 # Expose the port (change if you use a different port)
 EXPOSE 4000
