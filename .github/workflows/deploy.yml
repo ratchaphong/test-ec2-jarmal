@@ -1,0 +1,49 @@
+# 👉 ชื่อ workflow ที่จะแสดงในแท็บ Actions บน GitHub
+name: Deploy to Self-Hosted Server via DockerHub
+
+# 👉 กำหนดว่า workflow นี้จะทำงานเมื่อ push ไปยัง branch develop
+on:
+  push:
+    branches:
+      - develop
+
+jobs:
+  # 👉 Job แรก: สร้าง Docker image และ push ไป DockerHub
+  build:
+    runs-on: ubuntu-latest # ใช้ runner ของ GitHub เอง (ไม่ใช่ self-hosted)
+
+    steps:
+      # 👉 โหลด source code ของคุณจาก GitHub
+      - name: Checkout source
+        uses: actions/checkout@v4
+
+      # 👉 Login ไปยัง DockerHub โดยใช้ Secrets ที่ตั้งไว้
+      - name: Login to DockerHub
+        run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+
+      # 👉 สร้าง Docker image โดยใช้ Dockerfile ใน root
+      - name: Build Docker Image
+        run: docker build -t ratchaphongc1/ec2-jarmal-image . # <== เปลี่ยนให้ตรงกับคุณ
+
+      # 👉 Push image ไปยัง DockerHub
+      - name: Push Docker Image to DockerHub
+        run: docker push ratchaphongc1/ec2-jarmal-image:latest
+
+  # 👉 Job ที่สอง: ใช้ runner ที่ติดตั้งใน server จริงเพื่อ deploy container ใหม่
+  deploy:
+    name: Deploy to Self-hosted Server
+    needs: build # 👉 ให้รอ job build เสร็จก่อนค่อยทำ deploy
+    runs-on: self-hosted # 👉 ใช้ runner ที่รันอยู่ใน server จริงของคุณ
+
+    steps:
+      # 👉 ดึง image ล่าสุดจาก DockerHub มาลง server
+      - name: Pull latest image from DockerHub
+        run: docker pull ratchaphongc1/ec2-jarmal-image:latest
+
+      # 👉 ลบ container เก่า (ถ้ามี) เพื่อให้รัน container ใหม่ได้
+      - name: Stop and remove old container (if exists)
+        run: docker rm -f ec2-jarmal-container || true
+
+      # 👉 รัน container ใหม่จาก image ล่าสุด
+      - name: Run new container
+        run: docker run -d -p 4000:4000 --name ec2-jarmal-container ratchaphongc1/ec2-jarmal-image:latest

@@ -79,3 +79,6 @@ Below is the complete structure of the data models and their relationships.
 - `Comment` ↔ `Comment`: Self-relation (Replies)
 
 ---
+
+mkdir -p .github/workflows
+touch .github/workflows/deploy.yml
