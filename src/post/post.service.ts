@@ -104,10 +104,7 @@ export class PostService {
     return this.prisma.post.findMany({
       where: {
         deletedAt: null,
-        OR: [
-          { title: { contains: text, mode: 'insensitive' } },
-          { content: { contains: text, mode: 'insensitive' } },
-        ],
+        OR: [{ title: { contains: text } }, { content: { contains: text } }],
       },
     });
   }

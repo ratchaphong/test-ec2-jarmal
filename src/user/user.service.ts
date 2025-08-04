@@ -21,7 +21,8 @@ export class UserService {
    * SELECT * FROM "User" WHERE "email" = $email LIMIT 1;
    */
   async existsByEmail(email: string) {
-    const user = this.prisma.user.findFirst({ where: { email } });
+    const user = await this.prisma.user.findFirst({ where: { email } });
+    console.log(user);
     return !!user;
   }
 

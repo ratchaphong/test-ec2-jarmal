@@ -3,7 +3,7 @@ import { Post, User } from '@prisma/client';
 import { ApiProperty } from '@nestjs/swagger';
 import { PostResponseDto } from 'src/post/dto/post-response.dto';
 import { Exclude, Expose, Type } from 'class-transformer';
-import { ProfileResponseDto } from './profile-response.dto';
+import { ProfileResponseDto } from 'src/profile/dto/profile-response.dto';
 
 @Exclude()
 export class UserResponseDto implements User {
