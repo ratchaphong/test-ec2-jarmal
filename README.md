@@ -80,5 +80,5 @@ Below is the complete structure of the data models and their relationships.
 
 ---
 
-mkdir -p .github/workflows
-touch .github/workflows/deploy.yml
+    mkdir -p .github/workflows
+    touch .github/workflows/deploy.yml
