@@ -5,6 +5,7 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  console.log('DATABASE_URL', process.env.DATABASE_URL);
 
   const config = new DocumentBuilder()
     .setTitle('Blog API')
