@@ -45,7 +45,7 @@ jobs:
         run: docker rm -f ec2-jarmal-container || true
 
       - name: Create .env file on the server
-        run: echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" .env
+        run: echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" > .env
 
       # 👉 รัน container ใหม่จาก image ล่าสุด
       - name: Run new container
