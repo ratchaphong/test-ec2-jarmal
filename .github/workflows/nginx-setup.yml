@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       # Optional: Only needed if nginx.conf is inside your repo (not required if you upload it manually)
-      # - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
       - name: Copy Nginx config to EC2
         uses: appleboy/scp-action@v0.1.4
