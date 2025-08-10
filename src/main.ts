@@ -11,7 +11,6 @@ async function bootstrap() {
     .setTitle('Blog API')
     .setDescription('The blog API with NestJS + Prisma')
     .setVersion('1.0')
-    // .addTag('posts')
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
