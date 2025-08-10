@@ -49,4 +49,10 @@ jobs:
 
       # 👉 รัน container ใหม่จาก image ล่าสุด
       - name: Run new container
-        run: docker run -d -p 4000:4000 --env-file .env --name ec2-jarmal-container ratchaphongc1/ec2-jarmal-image:latest
+        run: |
+          docker run -d \
+            -p 4000:4000 \
+            --env-file .env \
+            --name ec2-jarmal-container \
+            ratchaphongc1/ec2-jarmal-image:latest \
+            sh -c "npx prisma migrate deploy && node dist/main.js"
