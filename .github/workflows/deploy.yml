@@ -55,4 +55,4 @@ jobs:
             --env-file .env \
             --name ec2-jarmal-container \
             ratchaphongc1/ec2-jarmal-image:latest \
-            sh -c "npx prisma migrate deploy && npx prisma generate && node dist/main.js"
+            sh -c "npx prisma migrate deploy && npx prisma generate && node dist/src/main.js"
